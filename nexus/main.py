@@ -159,14 +159,16 @@ async def auth_login(request: Request):
     """Start the Google OAuth2 login flow — redirects to Google."""
     from nexus.tools.google_auth import has_oauth_client, get_auth_url, is_authenticated
 
+    frontend_base = settings.frontend_url.rstrip("/")
+
     if is_authenticated():
-        return RedirectResponse(url="/?auth=already_connected")
+        return RedirectResponse(url=f"{frontend_base}/?auth=already_connected")
 
     if not has_oauth_client():
-        return RedirectResponse(url="/?auth=needs_setup")
+        return RedirectResponse(url=f"{frontend_base}/?auth=needs_setup")
 
-    # Determine the callback URL
-    callback_url = str(request.base_url).rstrip("/") + "/auth/callback"
+    # Determine the callback URL using literal settings instead of dynamic base_url to prevent localhost vs 127.0.0.1 mismatch
+    callback_url = settings.webhook_base_url.rstrip("/") + "/auth/callback"
     auth_url = get_auth_url(redirect_uri=callback_url)
 
     logger.info("oauth_login_redirect", callback=callback_url)
@@ -178,23 +180,25 @@ async def auth_callback(request: Request, code: str = "", error: str = ""):
     """Handle the OAuth2 callback from Google."""
     from nexus.tools.google_auth import exchange_code_for_tokens
 
+    frontend_base = settings.frontend_url.rstrip("/")
+
     if error:
         logger.error("oauth_callback_error", error=error)
-        return RedirectResponse(url=f"/?auth=error&message={error}")
+        return RedirectResponse(url=f"{frontend_base}/?auth=error&message={error}")
 
     if not code:
-        return RedirectResponse(url="/?auth=error&message=no_code")
+        return RedirectResponse(url=f"{frontend_base}/?auth=error&message=no_code")
 
     # Exchange the authorization code for tokens
-    callback_url = str(request.base_url).rstrip("/") + "/auth/callback"
+    callback_url = settings.webhook_base_url.rstrip("/") + "/auth/callback"
     creds = exchange_code_for_tokens(code, redirect_uri=callback_url)
 
     if creds:
         logger.info("oauth_login_success")
-        return RedirectResponse(url="/?auth=success")
+        return RedirectResponse(url=f"{frontend_base}/?auth=success")
     else:
         logger.error("oauth_token_exchange_failed")
-        return RedirectResponse(url="/?auth=error&message=token_exchange_failed")
+        return RedirectResponse(url=f"{frontend_base}/?auth=error&message=token_exchange_failed")
 
 
 class OAuthSetupRequest(BaseModel):
@@ -228,6 +232,25 @@ async def auth_logout():
         "status": "success" if removed else "no_session",
         "message": "Signed out successfully." if removed else "No active session.",
     }
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# DATA SYNC ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════
+
+@app.post("/api/drive/sync")
+async def api_drive_sync():
+    """Manually trigger a sync of all NEXUS data to Google Drive."""
+    from nexus.db.engine import get_db_context
+    from nexus.tools.drive_tools import sync_data_to_drive
+    
+    try:
+        async with get_db_context() as session:
+            result = await sync_data_to_drive(session)
+        return result
+    except Exception as e:
+        logger.error("api_drive_sync_failed", exc_info=e)
+        return {"status": "error", "message": str(e)}
 
 
 # ═══════════════════════════════════════════════════════════════════════

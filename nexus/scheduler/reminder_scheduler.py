@@ -34,6 +34,19 @@ async def _reminder_job():
         set_agent_status("reminder", "error", str(exc))
         logger.error("reminder_poll_error", error=str(exc))
 
+async def _drive_sync_job():
+    """Scheduled job: backup all nexus data to Google Drive periodically."""
+    from nexus.db.engine import get_db_context
+    from nexus.tools.drive_tools import sync_data_to_drive
+    
+    try:
+        logger.info("drive_sync_job_starting")
+        async with get_db_context() as session:
+            result = await sync_data_to_drive(session)
+        logger.info("drive_sync_job_complete", result=result)
+    except Exception as exc:
+        logger.error("drive_sync_job_error", error=str(exc))
+
 
 def start_scheduler():
     """Start the APScheduler with the reminder polling job."""
@@ -42,6 +55,14 @@ def start_scheduler():
         trigger=IntervalTrigger(seconds=settings.reminder_poll_seconds),
         id="reminder_poll",
         name="Reminder deadline poll",
+        replace_existing=True,
+    )
+    # Background sync every 12 hours
+    scheduler.add_job(
+        _drive_sync_job,
+        trigger=IntervalTrigger(hours=12),
+        id="drive_sync_poll",
+        name="Google Drive Background Sync",
         replace_existing=True,
     )
     scheduler.start()

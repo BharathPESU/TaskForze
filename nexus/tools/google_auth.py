@@ -29,6 +29,7 @@ SCOPES = [
     "https://www.googleapis.com/auth/tasks",
     "https://www.googleapis.com/auth/userinfo.email",
     "openid",
+    "https://www.googleapis.com/auth/drive.file",
 ]
 
 # File paths
@@ -43,6 +44,9 @@ GOOGLE_TOKEN_URI = "https://oauth2.googleapis.com/token"
 
 def _load_client_config() -> dict:
     """Load OAuth client configuration from credentials.json or env vars."""
+    from dotenv import load_dotenv
+    load_dotenv()
+    
     # Priority 1: Environment variables
     client_id = os.environ.get("GOOGLE_OAUTH_CLIENT_ID", "")
     client_secret = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET", "")

@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-nexus-bg: #0b0c10;
+  --color-nexus-panel: #13141a;
+  --color-nexus-sidebar: #0e0f14;
+  --color-nexus-accent: #7b61ff;
+  --color-nexus-accent-hover: #9b87ff;
+  --color-nexus-border: #2a2b36;
+  --color-nexus-text: #e2e8f0;
+  --color-nexus-muted: #94a3b8;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: #0b0c10;
+  --foreground: #e2e8f0;
+}
+
+body {
+  background: var(--background);
+  background-image: url('/background_glass.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 8px rgba(123, 97, 255, 0.4)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 20px rgba(123, 97, 255, 0.8)); }
+}
+
+@keyframes draw-line {
+  0% { stroke-dashoffset: 1000; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Custom scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-nexus-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-nexus-muted);
+}
