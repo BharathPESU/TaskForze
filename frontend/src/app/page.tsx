@@ -44,6 +44,7 @@ import {
 
 import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/components/AuthProvider";
+import { BackgroundVideo } from "@/components/BackgroundVideo";
 import { auth } from "@/lib/firebase";
 import {
   apiPath,
@@ -383,7 +384,8 @@ export default function Dashboard() {
 
   return (
     <AuthGuard>
-      <div className="flex h-screen w-full text-[#e2e8f0] bg-transparent">
+      <div className="relative flex h-screen w-full overflow-hidden bg-transparent text-[#e2e8f0]">
+        <BackgroundVideo />
         
         {/* SIDEBAR */}
         <aside className="hidden flex-col items-center border-r border-white/10 bg-black/40 backdrop-blur-xl py-6 md:flex md:w-20 shrink-0 z-10">
@@ -900,4 +902,3 @@ export default function Dashboard() {
     </AuthGuard>
   );
 }
-

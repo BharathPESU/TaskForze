@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import { useAuth } from "@/components/AuthProvider";
+import { BackgroundVideo } from "@/components/BackgroundVideo";
 import { Layout, ShieldAlert } from "lucide-react";
 import Image from "next/image";
 
@@ -38,8 +39,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1d1b32] via-[#0b0c10] to-[#0b0c10] text-[#e2e8f0]">
-      <div className="w-full max-w-md px-8 text-center mt-[-10vh]">
+    <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden text-[#e2e8f0]">
+      <BackgroundVideo />
+
+      <div className="relative z-10 mt-[-10vh] w-full max-w-md px-8 text-center">
         <div className="mb-8 flex justify-center">
           <div className="relative h-28 w-28 drop-shadow-[0_0_40px_rgba(123,97,255,0.4)]">
             <Image src="/logo.png" alt="TaskForze Logo" fill priority className="object-contain" />
