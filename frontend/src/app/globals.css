@@ -1,39 +1,181 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-nexus-bg: #0b0c10;
-  --color-nexus-panel: #13141a;
-  --color-nexus-sidebar: #0e0f14;
-  --color-nexus-accent: #7b61ff;
-  --color-nexus-accent-hover: #9b87ff;
-  --color-nexus-border: #2a2b36;
-  --color-nexus-text: #e2e8f0;
-  --color-nexus-muted: #94a3b8;
+  --color-nexus-bg: #090a12;
+  --color-nexus-panel: #111424;
+  --color-nexus-sidebar: #0d1020;
+  --color-nexus-accent: #7a79ff;
+  --color-nexus-accent-hover: #9ca4ff;
+  --color-nexus-border: #2f3550;
+  --color-nexus-text: #e8ebff;
+  --color-nexus-muted: #a8b0cf;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 :root {
-  --background: #0b0c10;
-  --foreground: #e2e8f0;
+  --background: #090a12;
+  --foreground: #e8ebff;
+  --tf-ink: #070a14;
+  --tf-glass: rgba(255, 255, 255, 0.08);
+  --tf-glass-strong: rgba(255, 255, 255, 0.14);
+  --tf-border: rgba(255, 255, 255, 0.18);
+  --tf-border-soft: rgba(255, 255, 255, 0.1);
+  --tf-neon-blue: #56a0ff;
+  --tf-neon-violet: #8874ff;
+  --tf-neon-pink: #ff76cc;
+  --tf-glow-soft: 0 0 24px rgba(123, 121, 255, 0.28);
+  --tf-glow-strong: 0 0 36px rgba(86, 160, 255, 0.35);
+  --tf-shadow-panel: 0 22px 60px rgba(1, 5, 20, 0.45);
 }
 
 body {
   background: var(--background);
-  background-image: url('/background_glass.png');
-  background-size: cover;
-  background-position: center;
+  background-image:
+    radial-gradient(circle at 10% 12%, rgba(122, 121, 255, 0.18), transparent 42%),
+    radial-gradient(circle at 88% 20%, rgba(86, 160, 255, 0.16), transparent 36%),
+    radial-gradient(circle at 72% 82%, rgba(255, 118, 204, 0.1), transparent 30%),
+    linear-gradient(160deg, #070914 0%, #090b17 42%, #070911 100%);
   background-attachment: fixed;
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: "SF Pro Text", "SF Pro Display", "-apple-system", BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
   height: 100vh;
   margin: 0;
   overflow: hidden;
+  line-height: 1.45;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 0.5px, transparent 0.5px);
+  background-size: 2px 2px;
+  opacity: 0.035;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+.tf-dashboard,
+.tf-login-shell {
+  color: var(--color-nexus-text);
+  letter-spacing: -0.01em;
+}
+
+.tf-sidebar {
+  background: linear-gradient(170deg, rgba(17, 22, 40, 0.72), rgba(10, 13, 25, 0.66));
+  border-right: 1px solid var(--tf-border-soft);
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.tf-traffic-lights {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.tf-traffic-dot {
+  height: 0.72rem;
+  width: 0.72rem;
+  border-radius: 9999px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.32);
+}
+
+.tf-nav-button {
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  color: var(--color-nexus-muted);
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.24s ease-in-out;
+}
+
+.tf-nav-button:hover {
+  transform: translateY(-1px) scale(1.03);
+  color: #f6f8ff;
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tf-nav-button-active {
+  color: #edf0ff;
+  border-color: rgba(136, 116, 255, 0.44);
+  background: linear-gradient(140deg, rgba(136, 116, 255, 0.26), rgba(86, 160, 255, 0.19));
+  box-shadow: var(--tf-glow-soft);
+}
+
+.tf-main-header {
+  border-bottom: 1px solid var(--tf-border-soft);
+  background: linear-gradient(180deg, rgba(15, 20, 36, 0.52), rgba(10, 13, 24, 0.38));
+  backdrop-filter: blur(18px);
+}
+
+.tf-glass-panel {
+  border: 1px solid var(--tf-border-soft);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(18px);
+  box-shadow: var(--tf-shadow-panel);
+}
+
+.tf-glass-card {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(160deg, rgba(9, 13, 30, 0.56), rgba(5, 8, 20, 0.52));
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 28px rgba(4, 8, 22, 0.44);
+}
+
+.tf-glass-card:hover {
+  border-color: rgba(136, 116, 255, 0.32);
+  box-shadow: var(--tf-glow-soft), 0 10px 28px rgba(4, 8, 22, 0.52);
+}
+
+.tf-neon-button {
+  background: linear-gradient(135deg, rgba(124, 113, 255, 0.9), rgba(86, 160, 255, 0.9));
+  box-shadow: 0 10px 24px rgba(70, 99, 220, 0.46), 0 0 22px rgba(122, 121, 255, 0.38);
+  transition: all 0.25s ease-in-out;
+}
+
+.tf-neon-button:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(70, 99, 220, 0.52), 0 0 30px rgba(86, 160, 255, 0.42);
+}
+
+.tf-neon-button:active {
+  transform: scale(0.98);
+}
+
+.tf-input-glass {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(14, 18, 33, 0.56);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease-in-out;
+}
+
+.tf-input-glass:focus {
+  border-color: rgba(122, 121, 255, 0.5);
+  box-shadow: 0 0 0 2px rgba(122, 121, 255, 0.22), var(--tf-glow-soft);
+}
+
+.tf-login-card {
+  border: 1px solid var(--tf-border);
+  background: linear-gradient(160deg, rgba(15, 19, 36, 0.72), rgba(10, 13, 24, 0.7));
+  backdrop-filter: blur(20px);
+  box-shadow: var(--tf-shadow-panel), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.tf-google-button {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(6, 9, 20, 0.32);
+  transition: all 0.24s ease-in-out;
+}
+
+.tf-google-button:hover {
+  box-shadow: 0 10px 30px rgba(6, 9, 20, 0.44), 0 0 18px rgba(255, 255, 255, 0.3);
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 8px rgba(123, 97, 255, 0.4)); }
-  50% { opacity: 1; filter: drop-shadow(0 0 20px rgba(123, 97, 255, 0.8)); }
+  0%, 100% { opacity: 0.84; filter: drop-shadow(0 0 8px rgba(123, 121, 255, 0.38)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 18px rgba(86, 160, 255, 0.52)); }
 }
 
 @keyframes draw-line {
@@ -41,8 +183,17 @@ body {
   100% { stroke-dashoffset: 0; }
 }
 
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
 .animate-pulse-glow {
   animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-float-soft {
+  animation: float-soft 5.5s ease-in-out infinite;
 }
 
 /* Custom scrollbar for webkit */
@@ -50,13 +201,16 @@ body {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--color-nexus-border);
+  background: rgba(150, 164, 210, 0.35);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-nexus-muted);
+  background: rgba(172, 188, 240, 0.55);
 }

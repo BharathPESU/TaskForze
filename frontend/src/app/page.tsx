@@ -11,26 +11,17 @@ import {
   Calendar,
   CheckCircle2,
   Clock,
-  Clock3,
   Hexagon,
   Layout,
   LogOut,
   Menu,
   MessageCircle,
   Mic,
-  Play,
   Send,
   CloudUpload,
-  Settings,
-  ShieldAlert,
   Sparkles,
   Smartphone,
-  Cpu,
-  Terminal,
   PhoneCall,
-  Link2,
-  Star,
-  MessageSquare,
   Search,
   ChevronDown,
   Plus,
@@ -38,7 +29,6 @@ import {
   Users,
   Palette,
   PenBox,
-  Check,
   Mail,
 } from "lucide-react";
 
@@ -384,21 +374,29 @@ export default function Dashboard() {
 
   return (
     <AuthGuard>
-      <div className="relative flex h-screen w-full overflow-hidden bg-transparent text-[#e2e8f0]">
+      <div className="tf-dashboard relative flex h-screen w-full overflow-hidden bg-transparent text-[#e8ebff]">
         <BackgroundVideo />
         
         {/* SIDEBAR */}
-        <aside className="hidden flex-col items-center border-r border-white/10 bg-black/40 backdrop-blur-xl py-6 md:flex md:w-20 shrink-0 z-10">
-          <div className="mb-8 rounded-xl bg-gradient-to-tr from-[#7b61ff] to-[#4c2dff] p-2.5 shadow-[0_0_15px_rgba(123,97,255,0.3)]">
+        <aside className="tf-sidebar hidden shrink-0 flex-col items-center px-3 py-5 backdrop-blur-2xl md:flex md:w-24 z-10">
+          <div className="mb-4 flex w-full items-center justify-start pl-1">
+            <div className="tf-traffic-lights">
+              <span className="tf-traffic-dot bg-[#ff5f57]" />
+              <span className="tf-traffic-dot bg-[#febc2e]" />
+              <span className="tf-traffic-dot bg-[#28c840]" />
+            </div>
+          </div>
+
+          <div className="mb-8 rounded-2xl bg-gradient-to-tr from-[#746dff] via-[#6a6fff] to-[#5d8dff] p-2.5 shadow-[0_0_18px_rgba(122,121,255,0.34)] animate-float-soft">
             <Layout className="h-6 w-6 text-white" />
           </div>
           
           <nav className="flex w-full flex-1 flex-col items-center gap-6">
             <button
               onClick={() => setActiveTab("chat")}
-              className={`flex h-12 w-12 items-center justify-center rounded-2xl border transition-all ${
+              className={`tf-nav-button flex h-12 w-12 items-center justify-center border transition-all ${
                 activeTab === "chat"
-                  ? "border-[#7b61ff]/50 bg-[#7b61ff]/20 text-[#7b61ff] shadow-[0_0_15px_rgba(123,97,255,0.3)] scale-105"
+                  ? "tf-nav-button-active"
                   : "border-transparent text-[#94a3b8] hover:bg-white/5 hover:text-white"
               }`}
             >
@@ -406,9 +404,9 @@ export default function Dashboard() {
             </button>
             <button
               onClick={() => setActiveTab("tasks")}
-              className={`flex h-12 w-12 items-center justify-center rounded-2xl border transition-all ${
+              className={`tf-nav-button flex h-12 w-12 items-center justify-center border transition-all ${
                 activeTab === "tasks"
-                  ? "border-[#7b61ff]/50 bg-[#7b61ff]/20 text-[#7b61ff] shadow-[0_0_15px_rgba(123,97,255,0.3)] scale-105"
+                  ? "tf-nav-button-active"
                   : "border-transparent text-[#94a3b8] hover:bg-white/5 hover:text-white"
               }`}
             >
@@ -416,9 +414,9 @@ export default function Dashboard() {
             </button>
             <button
               onClick={() => setActiveTab("calendar")}
-              className={`flex h-12 w-12 items-center justify-center rounded-2xl border transition-all ${
+              className={`tf-nav-button flex h-12 w-12 items-center justify-center border transition-all ${
                 activeTab === "calendar"
-                  ? "border-[#7b61ff]/50 bg-[#7b61ff]/20 text-[#7b61ff] shadow-[0_0_15px_rgba(123,97,255,0.3)] scale-105"
+                  ? "tf-nav-button-active"
                   : "border-transparent text-[#94a3b8] hover:bg-white/5 hover:text-white"
               }`}
             >
@@ -426,9 +424,9 @@ export default function Dashboard() {
             </button>
             <button
               onClick={() => setActiveTab("connection")}
-              className={`flex h-12 w-12 items-center justify-center rounded-2xl border transition-all ${
+              className={`tf-nav-button flex h-12 w-12 items-center justify-center border transition-all ${
                 activeTab === "connection"
-                  ? "border-[#7b61ff]/50 bg-[#7b61ff]/20 text-[#7b61ff] shadow-[0_0_15px_rgba(123,97,255,0.3)] scale-105"
+                  ? "tf-nav-button-active"
                   : "border-transparent text-[#94a3b8] hover:bg-white/5 hover:text-white"
               }`}
               title="Connections"
@@ -456,12 +454,12 @@ export default function Dashboard() {
                 }
               }}
               disabled={isSyncing}
-              className="flex h-10 w-10 items-center justify-center rounded-xl text-[#94a3b8] transition-colors hover:bg-[#7b61ff]/20 hover:text-[#7b61ff] disabled:opacity-50" 
+              className="tf-nav-button flex h-10 w-10 items-center justify-center text-[#94a3b8] transition-colors hover:bg-[#7b61ff]/20 hover:text-[#c6cbff] disabled:opacity-50" 
               title="Backup to Google Drive"
             >
               <CloudUpload className={`h-5 w-5 ${isSyncing ? "animate-bounce" : ""}`} />
             </button>
-            <button onClick={handleSignOut} className="flex h-10 w-10 items-center justify-center rounded-xl text-[#94a3b8] transition-colors hover:bg-rose-500/20 hover:text-rose-400" title="Sign out">
+            <button onClick={handleSignOut} className="tf-nav-button flex h-10 w-10 items-center justify-center text-[#94a3b8] transition-colors hover:bg-rose-500/20 hover:text-rose-300" title="Sign out">
               <LogOut className="h-5 w-5" />
             </button>
             <div className="mt-2 h-10 w-10 overflow-hidden rounded-full border border-white/20 bg-black shadow-[0_0_15px_rgba(255,255,255,0.1)]">
@@ -476,14 +474,14 @@ export default function Dashboard() {
 
         {/* MAIN BODY */}
         <div className="flex min-w-0 flex-1 flex-col relative z-0">
-          <header className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-black/20 px-6 backdrop-blur-xl">
+          <header className="tf-main-header flex h-16 shrink-0 items-center justify-between px-6">
             <div className="flex items-center gap-4">
               <button className="md:hidden text-[#94a3b8]"><Menu className="h-6 w-6" /></button>
               <div className="flex items-center gap-3">
                 <div className="relative h-8 w-8 drop-shadow-[0_0_15px_rgba(123,97,255,0.5)]">
                   <Image src="/logo.png" alt="TaskForze Logo" fill priority className="object-contain" />
                 </div>
-                <h1 className="text-xl font-bold tracking-tight text-white">TaskForze</h1>
+                <h1 className="text-xl font-semibold tracking-tight text-white">TaskForze</h1>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -492,11 +490,11 @@ export default function Dashboard() {
                   <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${backendOnline ? 'bg-emerald-400' : 'bg-rose-400'}`} />
                   <span className={`relative inline-flex h-3 w-3 rounded-full ${backendOnline ? 'bg-emerald-500' : 'bg-rose-500'}`} />
                 </span>
-                <span className="text-xs font-medium text-[#94a3b8] hidden sm:block">
-                  {backendOnline ? 'Connected' : 'Reconnecting...'}
-                </span>
+                  <span className="hidden text-xs font-medium text-[#a8b0cf] sm:block">
+                    {backendOnline ? 'Connected' : 'Reconnecting...'}
+                  </span>
+                </div>
               </div>
-            </div>
           </header>
 
           <main className="min-h-0 flex-1 overflow-y-auto px-4 py-8 md:px-8">
@@ -510,12 +508,12 @@ export default function Dashboard() {
               )}
               
               {/* ASSISTANTS OVERVIEW */}
-              <section className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-xl relative overflow-hidden">
+              <section className="tf-glass-panel relative overflow-hidden rounded-3xl p-6">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#7b61ff]/5 to-transparent pointer-events-none" />
                 <div className="mb-6 flex items-center justify-between relative z-10">
                   <div>
                     <h2 className="text-xl font-semibold text-white">Your Workforce</h2>
-                    <p className="mt-1 text-sm text-white/50">
+                    <p className="mt-1 text-sm text-[#aab1ca]">
                       {liveAgents > 0 ? `${liveAgents} assistants actively working` : "All assistants standing by"}
                     </p>
                   </div>
@@ -541,7 +539,7 @@ export default function Dashboard() {
                         }}
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                         className={cn(
-                          "group flex flex-col justify-between rounded-2xl border bg-black/40 p-4 transition-colors relative overflow-hidden",
+                          "tf-glass-card group relative flex flex-col justify-between overflow-hidden rounded-2xl p-4 transition-colors",
                           isActive && "animate-pulse-glow",
                           isNotes && "cursor-pointer hover:bg-black/60",
                           isNotes && isRecording && "border-rose-500/50 shadow-[0_0_20px_rgba(244,63,94,0.4)]"
@@ -607,19 +605,19 @@ export default function Dashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
-                    className="grid grid-cols-1 gap-6 lg:grid-cols-3 xl:gap-8"
+                    className="grid grid-cols-1 gap-7 lg:grid-cols-3 xl:gap-8"
                   >
-                    <section className="flex h-[600px] flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-3xl lg:col-span-2 relative">
+                    <section className="tf-glass-panel relative flex h-[600px] flex-col overflow-hidden rounded-3xl lg:col-span-2">
                       <div className="absolute inset-0 bg-gradient-to-br from-black/40 to-transparent pointer-events-none" />
                       
                       {/* Chat Header */}
-                      <div className="flex items-center gap-3 border-b border-white/10 bg-black/20 p-4 relative overflow-hidden backdrop-blur-xl z-10">
+                      <div className="relative z-10 flex items-center gap-3 overflow-hidden border-b border-white/10 bg-black/20 p-4 backdrop-blur-xl">
                         <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-[#7b61ff]/50 to-transparent" />
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-[#7b61ff] to-[#4c2dff] shadow-[0_0_15px_rgba(123,97,255,0.4)]">
                           <Bot className="h-5 w-5 text-white" />
                         </div>
                         <div>
-                          <h2 className="font-semibold text-white drop-shadow-md">Ask TaskForze</h2>
+                           <h2 className="font-semibold tracking-tight text-white drop-shadow-md">Ask TaskForze</h2>
                           <div className="flex items-center gap-2 text-xs text-[#7b61ff]">
                             <span className="relative flex h-2 w-2">
                               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#7b61ff] opacity-75"></span>
@@ -639,9 +637,9 @@ export default function Dashboard() {
                               <Hexagon className="h-10 w-10 text-[#7b61ff]/70 relative z-10" />
                             </div>
                             <h3 className="text-xl font-bold text-white drop-shadow-md">How can we help today?</h3>
-                            <p className="mt-3 max-w-sm text-sm text-white/50 leading-relaxed">
-                              Delegate tasks to your AI workforce. Ask us to draft emails, analyze files, check calendars, and more.
-                            </p>
+                             <p className="mt-3 max-w-sm text-sm leading-relaxed text-[#b0b7d2]">
+                               Delegate tasks to your AI workforce. Ask us to draft emails, analyze files, check calendars, and more.
+                             </p>
                           </div>
                         ) : (
                           <div className="space-y-6">
@@ -657,9 +655,9 @@ export default function Dashboard() {
                                     <Sparkles className="h-4 w-4 text-white" />
                                   </div>
                                 )}
-                                <div className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-5 py-4 text-sm leading-relaxed shadow-lg backdrop-blur-md ${m.role === "user" ? "rounded-br-sm bg-gradient-to-tr from-white to-gray-200 text-black font-medium" : "rounded-bl-sm border border-white/10 bg-black/40 text-[#e2e8f0]"}`}>
-                                  {m.content}
-                                </div>
+                                 <div className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-5 py-4 text-sm leading-relaxed shadow-lg backdrop-blur-md ${m.role === "user" ? "rounded-br-sm bg-gradient-to-tr from-white to-gray-200 font-medium text-black" : "rounded-bl-sm border border-white/10 bg-black/40 text-[#ebefff]"}`}>
+                                   {m.content}
+                                 </div>
                                 {m.role === "user" && (
                                   <div className="h-8 w-8 shrink-0 overflow-hidden rounded-xl border border-white/20 bg-black shadow-[0_0_10px_rgba(255,255,255,0.1)]">
                                     {user?.photoURL && <Image src={user.photoURL} alt="User" width={32} height={32} />}
@@ -686,20 +684,20 @@ export default function Dashboard() {
                         )}
                       </div>
 
-                      <div className="border-t border-white/10 bg-black/20 p-4 backdrop-blur-xl z-10">
+                       <div className="z-10 border-t border-white/10 bg-black/20 p-4 backdrop-blur-xl">
                         <form onSubmit={(e) => { e.preventDefault(); void handleSubmit(); }} className="flex gap-3 relative">
                           <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Delegate a task to your workforce..."
-                            className="flex-1 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm text-white placeholder-white/40 focus:border-[#7b61ff]/50 focus:bg-black/40 focus:outline-none focus:ring-1 focus:ring-[#7b61ff]/50 transition-all backdrop-blur-md shadow-inner"
+                            className="tf-input-glass flex-1 rounded-2xl px-5 py-4 text-sm text-white placeholder-white/40 focus:bg-black/50 focus:outline-none"
                             disabled={isLoading}
                           />
                           <button
                             type="submit"
                             disabled={isLoading || !input.trim()}
-                            className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#7b61ff] to-[#4c2dff] text-white shadow-[0_0_20px_rgba(123,97,255,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(123,97,255,0.6)] disabled:opacity-50 disabled:hover:scale-100 disabled:hover:shadow-[0_0_20px_rgba(123,97,255,0.4)]"
+                            className="tf-neon-button flex h-14 w-14 items-center justify-center rounded-2xl text-white disabled:opacity-50 disabled:hover:scale-100"
                           >
                             <Send className="h-5 w-5 ml-1" />
                           </button>
@@ -709,7 +707,7 @@ export default function Dashboard() {
 
                     {/* SIDE PANELS */}
                     <div className="flex flex-col gap-6">
-                      <section className="flex min-h-[300px] flex-col rounded-3xl border border-white/10 bg-white/5 py-6 px-4 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-2xl relative overflow-hidden">
+                      <section className="tf-glass-panel relative flex min-h-[300px] flex-col overflow-hidden rounded-3xl px-4 py-6">
                         <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
                         <div className="mb-4 flex items-center justify-between px-2">
                           <h3 className="font-bold text-white drop-shadow-md">Up Next</h3>
@@ -732,7 +730,7 @@ export default function Dashboard() {
                         </div>
                       </section>
 
-                      <section className="flex flex-col flex-1 rounded-3xl border border-white/10 bg-white/5 py-6 px-4 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-2xl relative overflow-hidden">
+                      <section className="tf-glass-panel relative flex flex-1 flex-col overflow-hidden rounded-3xl px-4 py-6">
                         <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#7b61ff]/50 to-transparent" />
                         <div className="mb-4 flex items-center justify-between px-2">
                           <h3 className="font-bold text-white drop-shadow-md">Activity</h3>
@@ -743,7 +741,7 @@ export default function Dashboard() {
                             <div key={w.id} className="relative pl-5 border-l border-white/10">
                               <div className="absolute -left-[5px] top-1.5 h-2 w-2 rounded-full bg-[#7b61ff] shadow-[0_0_8px_#7b61ff]" />
                               <p className="text-[9px] font-bold uppercase tracking-widest text-[#9b87ff]">Completed</p>
-                              <p className="mt-0.5 text-sm font-medium text-white line-clamp-2">{w.original_request}</p>
+                              <p className="mt-0.5 line-clamp-2 text-sm font-medium text-white">{w.user_intent || "Workflow completed"}</p>
                             </div>
                           ))}
                           {workflows.length === 0 && (
@@ -762,7 +760,7 @@ export default function Dashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
-                    className="flex flex-col rounded-3xl border border-white/10 bg-white/5 p-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-3xl min-h-[600px] relative overflow-hidden"
+                    className="tf-glass-panel relative flex min-h-[600px] flex-col overflow-hidden rounded-3xl p-8"
                   >
                     <div className="absolute inset-0 bg-gradient-to-bl from-emerald-500/5 to-transparent pointer-events-none" />
                     <div className="mb-6 flex items-center gap-3 relative z-10">
@@ -782,7 +780,7 @@ export default function Dashboard() {
                     ) : (
                       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 relative z-10">
                         {tasks.map((task) => (
-                          <motion.div whileHover={{ y: -4 }} key={task.id} className="group rounded-2xl border border-white/10 bg-black/40 p-5 relative overflow-hidden shadow-lg transition-all hover:bg-white/5 hover:border-emerald-500/30">
+                          <motion.div whileHover={{ y: -4 }} key={task.id} className="tf-glass-card group relative overflow-hidden rounded-2xl p-5 transition-all hover:border-emerald-500/30">
                              <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
                                <CheckCircle2 className="h-24 w-24 text-emerald-400 transform rotate-12 transition-transform group-hover:scale-110 group-hover:rotate-6" />
                              </div>
@@ -807,7 +805,7 @@ export default function Dashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
-                    className="flex flex-col items-center justify-center flex-1 min-h-[600px] rounded-3xl border border-white/10 bg-white/5 p-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-3xl relative overflow-hidden"
+                    className="tf-glass-panel relative flex min-h-[600px] flex-1 flex-col items-center justify-center overflow-hidden rounded-3xl p-8"
                   >
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(123,97,255,0.1),_transparent_70%)] pointer-events-none" />
                     <div className="rounded-full bg-white/5 p-8 border border-white/10 mb-6 relative overflow-hidden shadow-2xl">
@@ -826,10 +824,10 @@ export default function Dashboard() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
                     transition={{ duration: 0.2 }}
-                    className="flex flex-col rounded-3xl border border-white/10 bg-[#161618] shadow-2xl overflow-hidden min-h-[600px] flex-1 relative"
+                    className="tf-glass-panel relative flex min-h-[600px] flex-1 flex-col overflow-hidden rounded-3xl"
                   >
                     {/* Top Search bar area */}
-                    <div className="p-4 border-b border-white/10 bg-[#1c1c1e]">
+                    <div className="border-b border-white/10 bg-black/25 p-4 backdrop-blur-xl">
                       <div className="relative max-w-full">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
                         <input 
@@ -837,7 +835,7 @@ export default function Dashboard() {
                           placeholder="Search connectors..." 
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="w-full bg-[#252528] border border-transparent rounded-lg pl-11 pr-4 py-2.5 text-sm text-white placeholder-white/40 focus:outline-none focus:border-white/20 transition-all hover:bg-[#2a2a2d]" 
+                          className="tf-input-glass w-full rounded-lg border border-transparent pl-11 pr-4 py-2.5 text-sm text-white placeholder-white/40 focus:outline-none" 
                         />
                       </div>
                     </div>
@@ -846,15 +844,15 @@ export default function Dashboard() {
                       {/* Filter / Sort Row */}
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                         <div className="flex items-center gap-2">
-                          <button className="bg-black rounded-full px-4 py-1.5 text-xs font-semibold text-white border border-white/10 hover:bg-white/5 transition-colors">
+                          <button className="tf-glass-card rounded-full border border-white/10 px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-white/10">
                             All Integrations
                           </button>
                         </div>
                         <div className="flex items-center gap-3">
-                          <button className="flex items-center gap-2 bg-[#252528] border border-white/5 rounded-md px-3 py-1.5 text-sm font-medium text-white/70 hover:bg-[#2a2a2d] transition-colors">
+                          <button className="tf-glass-card flex items-center gap-2 rounded-md border border-white/10 px-3 py-1.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/10">
                             Filter by <ChevronDown className="h-4 w-4 opacity-60" />
                           </button>
-                          <button className="flex items-center gap-2 bg-[#252528] border border-white/5 rounded-md px-3 py-1.5 text-sm font-medium text-white/70 hover:bg-[#2a2a2d] transition-colors">
+                          <button className="tf-glass-card flex items-center gap-2 rounded-md border border-white/10 px-3 py-1.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/10">
                             Sort by <ChevronDown className="h-4 w-4 opacity-60" />
                           </button>
                         </div>
@@ -865,11 +863,11 @@ export default function Dashboard() {
                         {connectors
                           .filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()) || c.desc.toLowerCase().includes(searchQuery.toLowerCase()))
                           .map(c => (
-                          <div key={c.id} className="group rounded-2xl border border-white/10 bg-[#1e1e20] p-5 hover:bg-[#252528] transition-colors flex flex-col gap-3">
+                          <div key={c.id} className="tf-glass-card group flex flex-col gap-3 rounded-2xl p-5 transition-colors hover:bg-white/10">
                             {/* Top line: Icon, Title, and Plus button */}
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
-                                <div className="flex shrink-0 items-center justify-center w-10 h-10 rounded-xl bg-[#2a2a2d] border border-white/5 shadow-inner">
+                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 shadow-inner">
                                   {c.icon}
                                 </div>
                                 <span className="text-white font-semibold text-[15px]">{c.name}</span>
